@@ -75,7 +75,7 @@ function saveBase64Image(dataUrl: string): string | null {
   fs.mkdirSync(UPLOADS_DIR, { recursive: true });
   const filename = `proj-${Date.now()}-${crypto.randomBytes(4).toString('hex')}.${ext}`;
   fs.writeFileSync(path.join(UPLOADS_DIR, filename), buffer);
-  return `/uploads/${filename}`;
+  return `./uploads/${filename}`;
 }
 
 const store = loadStore();
@@ -111,7 +111,9 @@ async function startServer() {
 
   app.use(express.json({ limit: '8mb' }));
   app.use('/media', express.static(path.join(__dirname, 'src', 'assets', 'images')));
+  app.use('/admin/media', express.static(path.join(__dirname, 'src', 'assets', 'images')));
   app.use('/uploads', express.static(UPLOADS_DIR));
+  app.use('/admin/uploads', express.static(UPLOADS_DIR));
 
   app.get('/api/health', (_req, res) => {
     res.json({ ok: true });
@@ -175,7 +177,7 @@ async function startServer() {
           ? category
           : 'cnc';
 
-      let resolvedImageUrl = '/media/work_cnc_flange_1795175063002.jpg';
+      let resolvedImageUrl = './media/work_cnc_flange_1795175063002.jpg';
       if (typeof imageDataUrl === 'string' && imageDataUrl.startsWith('data:image/')) {
         const savedPath = saveBase64Image(imageDataUrl);
         if (savedPath) resolvedImageUrl = savedPath;

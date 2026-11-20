@@ -54,10 +54,10 @@ const TAB_LABELS: Record<AdminTab, string> = {
 };
 
 const PRESET_IMAGES = [
-  { label: 'تروس وأعمدة صلب', url: '/media/work_precision_gears_1795175062369.jpg' },
-  { label: 'فلانشات CNC ستانلس', url: '/media/work_cnc_flange_1795175063002.jpg' },
-  { label: 'جلب ومحاور نحاس', url: '/media/work_brass_bushings_1795175062935.jpg' },
-  { label: 'تشكيل وهياكل حديد', url: '/media/work_steel_fabrication_1795175063956.jpg' },
+  { label: 'تروس وأعمدة صلب', url: './media/work_precision_gears_1795175062369.jpg' },
+  { label: 'فلانشات CNC ستانلس', url: './media/work_cnc_flange_1795175063002.jpg' },
+  { label: 'جلب ومحاور نحاس', url: './media/work_brass_bushings_1795175062935.jpg' },
+  { label: 'تشكيل وهياكل حديد', url: './media/work_steel_fabrication_1795175063956.jpg' },
 ];
 
 export function AdminPage({

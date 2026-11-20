@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { fetchProjects, fetchSettings } from './api/client';
+import { fetchProjects, fetchSettings, isStaticHostMode } from './api/client';
 import { AdminPage } from './components/AdminPage';
 import { CapabilitiesBento } from './components/CapabilitiesBento';
 import { Footer } from './components/Footer';
@@ -18,8 +18,16 @@ import {
 
 const THEME_STORAGE_KEY = 'workshop_theme';
 
-function isAdminPath(pathname: string): boolean {
-  return pathname === '/admin' || pathname === '/admin.html' || pathname.startsWith('/admin/');
+function isAdminRoute(): boolean {
+  const pathname = window.location.pathname;
+  const hash = window.location.hash;
+  return (
+    hash === '#/admin' ||
+    pathname === '/admin' ||
+    pathname === '/admin.html' ||
+    pathname.endsWith('/admin') ||
+    pathname.endsWith('/admin.html')
+  );
 }
 
 function getInitialTheme(): ThemeMode {
@@ -32,9 +40,7 @@ function getInitialTheme(): ThemeMode {
 
 export function App() {
   const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
-  const [routeIsAdmin, setRouteIsAdmin] = useState(() =>
-    isAdminPath(window.location.pathname)
-  );
+  const [routeIsAdmin, setRouteIsAdmin] = useState(() => isAdminRoute());
   const [settings, setSettings] = useState<WorkshopSettings>(DEFAULT_SETTINGS);
   const [projects, setProjects] = useState<Project[]>(INITIAL_PROJECTS);
   const [loadingProjects, setLoadingProjects] = useState(true);
@@ -79,18 +85,35 @@ export function App() {
   }, [loadPublicData]);
 
   useEffect(() => {
-    const onPopState = () => {
-      setRouteIsAdmin(isAdminPath(window.location.pathname));
+    const onRouteChange = () => {
+      setRouteIsAdmin(isAdminRoute());
     };
-    window.addEventListener('popstate', onPopState);
-    return () => window.removeEventListener('popstate', onPopState);
+    window.addEventListener('popstate', onRouteChange);
+    window.addEventListener('hashchange', onRouteChange);
+    return () => {
+      window.removeEventListener('popstate', onRouteChange);
+      window.removeEventListener('hashchange', onRouteChange);
+    };
   }, []);
 
-  const navigateTo = (path: string) => {
-    if (window.location.pathname !== path) {
-      window.history.pushState({}, '', path);
+  const navigateTo = (target: 'home' | 'admin') => {
+    if (isStaticHostMode()) {
+      if (target === 'admin') {
+        window.location.hash = '#/admin';
+      } else if (window.location.hash) {
+        window.history.replaceState(
+          null,
+          '',
+          window.location.pathname + window.location.search
+        );
+      }
+    } else {
+      const nextPath = target === 'admin' ? '/admin' : '/';
+      if (window.location.pathname !== nextPath) {
+        window.history.pushState({}, '', nextPath);
+      }
     }
-    setRouteIsAdmin(isAdminPath(path));
+    setRouteIsAdmin(target === 'admin');
     window.scrollTo({ top: 0, behavior: 'auto' });
   };
 
@@ -114,7 +137,7 @@ export function App() {
       <AdminPage
         theme={theme}
         onToggleTheme={handleToggleTheme}
-        onNavigateHome={() => navigateTo('/')}
+        onNavigateHome={() => navigateTo('home')}
         onDataUpdated={loadPublicData}
       />
     );
@@ -142,7 +165,7 @@ export function App() {
         settings={settings}
         theme={theme}
         onToggleTheme={handleToggleTheme}
-        onNavigateAdmin={() => navigateTo('/admin')}
+        onNavigateAdmin={() => navigateTo('admin')}
       />
       <ProjectDetailModal
         project={selectedProject}

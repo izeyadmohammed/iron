@@ -1,6 +1,6 @@
 import type { Project, QuoteInquiry, WorkshopSettings } from './types';
 
-export const HERO_WORKSHOP_IMAGE = '/media/hero_lathe_workshop_1795175063653.jpg';
+export const HERO_WORKSHOP_IMAGE = './media/hero_lathe_workshop_1795175063653.jpg';
 
 export const DEFAULT_SETTINGS: WorkshopSettings = {
   siteName: 'ورشة الخراطة',
@@ -28,7 +28,7 @@ export const INITIAL_PROJECTS: Project[] = [
     sector: 'خطوط التعبئة والتغليف',
     description:
       'تصنيع وفرز مجموعة تروس حلزونية متعشقة مع أعمدة قلاووظ شبه منحرف (Trapezoidal) ومعالجة حرارية لرفع مقاومة التآكل تحت الأحمال المستمرة.',
-    imageUrl: '/media/work_precision_gears_1795175062369.jpg',
+    imageUrl: './media/work_precision_gears_1795175062369.jpg',
     featured: true,
     createdAt: '2026-10-18T09:00:00.000Z',
   },
@@ -44,7 +44,7 @@ export const INITIAL_PROJECTS: Project[] = [
     sector: 'محطات الضخ والبتروكيماويات',
     description:
       'تشغيل فلانشات ضغط عالي ووصلات رباعية مقلوظة بالكامل على مخارط CNC مع فحص استوائية الأسطح وثقوب التثبيت.',
-    imageUrl: '/media/work_cnc_flange_1795175063002.jpg',
+    imageUrl: './media/work_cnc_flange_1795175063002.jpg',
     featured: true,
     createdAt: '2026-10-14T11:30:00.000Z',
   },
@@ -60,7 +60,7 @@ export const INITIAL_PROJECTS: Project[] = [
     sector: 'معدات الكسارات والمكابس',
     description:
       'خراطة وتشطيب مرآوي لجلب نحاسية ذات ترتره خارجية وصواميل قفل مقلوظة M36×1.5 لاستبدال القطع المستوردة بدقة مطابقة للمصنع.',
-    imageUrl: '/media/work_brass_bushings_1795175062935.jpg',
+    imageUrl: './media/work_brass_bushings_1795175062935.jpg',
     featured: true,
     createdAt: '2026-10-08T14:15:00.000Z',
   },
@@ -76,7 +76,7 @@ export const INITIAL_PROJECTS: Project[] = [
     sector: 'الإنشاءات المعدنية والماكينات',
     description:
       'قص وتشكيل قواعد تثبيت وتفريز ألواح ارتكاز للمحركات الثقيلة مع تفتيح مجاري التثبيت بدقة وتجهيزها للتركيب المباشر.',
-    imageUrl: '/media/work_steel_fabrication_1795175063956.jpg',
+    imageUrl: './media/work_steel_fabrication_1795175063956.jpg',
     featured: false,
     createdAt: '2026-09-29T08:45:00.000Z',
   },
