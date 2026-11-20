@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ورشة الخراطة</title>
+  <script>
+    (function () {
+      var p = window.location.pathname;
+      var isAdmin = /\/admin(?:\/index\.html|\/|\.html)?$/i.test(p);
+      var base = '/';
+      if (isAdmin) {
+        base = p.replace(/\/admin(?:\/index\.html|\/|\.html)?$/i, '/');
+      } else if (window.location.hostname.endsWith('github.io')) {
+        var segs = p.split('/').filter(Boolean);
+        base = segs.length > 0 ? '/' + segs[0] + '/' : '/';
+      }
+      if (!base.endsWith('/')) base += '/';
+      window.location.replace(base + (isAdmin ? '#/admin' : ''));
+    })();
+  </script>
+</head>
+<body style="background:#0B0D10;color:#F3F4F6;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;text-align:center;">
+  <p>جاري التحويل...</p>
+</body>
+</html>

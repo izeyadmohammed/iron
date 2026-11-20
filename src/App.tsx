@@ -19,7 +19,7 @@ import {
 const THEME_STORAGE_KEY = 'workshop_theme';
 
 function isAdminRoute(): boolean {
-  const pathname = window.location.pathname;
+  const pathname = window.location.pathname.replace(/\/+$/, '');
   const hash = window.location.hash;
   return (
     hash === '#/admin' ||

@@ -28,6 +28,32 @@
   </head>
   <body class="bg-zinc-50 dark:bg-[#0B0D10] text-zinc-900 dark:text-zinc-100 antialiased selection:bg-orange-500 selection:text-white transition-colors duration-200">
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/main.tsx" onerror="window.__loadStaticFallback&&window.__loadStaticFallback()"></script>
+    <!-- STATIC_FALLBACK_START -->
+    <script>
+      (function () {
+        var loaded = false;
+        window.__loadStaticFallback = function () {
+          if (loaded || window.__WORKSHOP_MOUNTED__) return;
+          loaded = true;
+          var link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = './standalone/app.css';
+          document.head.appendChild(link);
+          var script = document.createElement('script');
+          script.type = 'module';
+          script.src = './standalone/app.js';
+          document.body.appendChild(script);
+        };
+        window.addEventListener('DOMContentLoaded', function () {
+          setTimeout(function () {
+            if (!window.__WORKSHOP_MOUNTED__) {
+              window.__loadStaticFallback();
+            }
+          }, 80);
+        });
+      })();
+    </script>
+    <!-- STATIC_FALLBACK_END -->
   </body>
 </html>

@@ -340,11 +340,24 @@ async function startServer() {
 
   if (process.env.NODE_ENV === 'production') {
     const distDir = path.join(__dirname, 'dist');
+    app.use('/admin/assets', express.static(path.join(distDir, 'assets')));
+    app.get(['/admin', '/admin/', '/admin.html'], (_req, res) => {
+      res.sendFile(path.join(distDir, 'index.html'));
+    });
     app.use(express.static(distDir));
     app.get('*', (_req, res) => {
       res.sendFile(path.join(distDir, 'index.html'));
     });
   } else {
+    app.use((req, _res, next) => {
+      if (
+        req.method === 'GET' &&
+        (req.path === '/admin' || req.path === '/admin/' || req.path === '/admin.html')
+      ) {
+        req.url = '/';
+      }
+      next();
+    });
     const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
